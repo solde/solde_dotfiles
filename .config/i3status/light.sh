@@ -1,0 +1,1 @@
+echo 'scale=2;' `cat /sys/class/backlight/intel_backlight/actual_brightness` '/' `cat /sys/class/backlight/intel_backlight/max_brightness` '* 100'| bc | sed 's/\...//' > ~/.config/i3status/xbacklight.out

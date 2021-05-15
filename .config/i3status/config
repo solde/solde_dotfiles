@@ -1,0 +1,82 @@
+general {
+        output_format = "i3bar"
+        colors = false
+        interval = 1
+}
+
+order += "wireless w lan0"
+order += "ethernet eth0"
+order += "volume master"
+order += "read_file backlight"
+order += "battery 0"
+order += "memory"
+order += "tztime local"
+
+wireless wlan0 {
+        format_up = "  %quality at %essid %ip"
+	format_down = ""
+}
+
+ethernet eth0 {
+        format_up = " %ip"
+	format_down = ""
+}
+
+battery 0 {
+        format = "%status %percentage"
+        format_down = ""
+        status_chr = ""
+        status_bat = ""
+        status_unk = "?"
+        status_full = ""
+        path = "/sys/class/power_supply/BAT0/uevent"
+        low_threshold = 10
+	last_full_capacity = true
+}
+
+run_watch DHCP {
+        pidfile = "/var/run/dhclient*.pid"
+}
+
+run_watch VPNC {
+        # file containing the PID of a vpnc process
+        pidfile = "/var/run/vpnc/pid"
+}
+
+path_exists VPN {
+        # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+        path = "/proc/sys/net/ipv4/conf/tun0"
+}
+
+tztime local {
+        format = "  %d-%m-%Y   %H:%M:%S"
+}
+
+tztime berlin {
+        format = "%Y-%m-%d %H:%M:%S %Z"
+        timezone = "Europe/Berlin"
+}
+
+
+memory {
+        format = "   %used"
+        threshold_degraded = "10%"
+        format_degraded = "MEMORY: %free"
+}
+
+read_file uptime {
+        path = "/proc/uptime"
+}
+
+volume master {
+        format = "墳 %volume"
+        format_muted = " 婢 0%"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+read_file backlight{
+	format = "盛  %content%"
+	path = "/home/solde/.config/i3status/xbacklight.out"
+}
